@@ -2,3 +2,4 @@ pagerank
 obj
 *.pyc
 .vscode/
+.idea
