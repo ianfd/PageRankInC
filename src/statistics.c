@@ -12,7 +12,7 @@
 
 void printStatistics(GraphData *graphData) {
     if (graphData != NULL) {
-        printLinkMatrix(graphData->size, graphData->nodeLinks);
+        //printLinkMatrix(graphData->size, graphData->nodeLinks);
         printf("%s:\n", graphData->title);
         printf("- num nodes: %d\n", graphData->size);
         printf("- num edges: %d\n", graphData->amountEdges);
