@@ -54,6 +54,7 @@ void calcMinMaxTo(int *min, int *max, GraphData *graphData) {
         if (currMin < 0) currMin = sum;
         if (currMax < sum) currMax = sum;
         if (currMin > sum) currMin = sum;
+        free(row);
     }
     *min = currMin;
     *max = currMax;
