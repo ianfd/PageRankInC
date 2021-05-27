@@ -38,7 +38,7 @@ GraphData *parseGraphFile(char *filename) {
             sizeOfNidArray = (sizeOfNidArray) * 2;
             nameIdPair = realloc(nameIdPair, sizeof(nameIdPair[0]) * (sizeOfNidArray));
         }
-        if (nlpIncrement +2 >= sizeOfNlpArray) {
+        if (nlpIncrement + 2 >= sizeOfNlpArray) {
             sizeOfNlpArray = (sizeOfNlpArray) * 2;
             nodeLinkPair = realloc(nodeLinkPair, sizeof(nodeLinkPair[0]) * (sizeOfNlpArray));
         }
@@ -59,7 +59,7 @@ GraphData *parseGraphFile(char *filename) {
             }
         }
     }
-    int* linkMatrix;
+    int *linkMatrix;
     int amountOfIdentifiers = nidIncrement + 1; // amount of unique ID
     int amountOfLinks = nlpIncrement + 1;
     linkMatrix = initIntMatrix(amountOfIdentifiers * amountOfIdentifiers); // amount of identifiers squared
@@ -69,9 +69,10 @@ GraphData *parseGraphFile(char *filename) {
     }
     free(nodeLinkPair);
     //printLinkMatrix(amountOfIdentifiers, linkMatrix);
-    graphData->nodeLinks=linkMatrix;
+    graphData->nodeLinks = linkMatrix;
     graphData->size = amountOfIdentifiers;
     graphData->nameIdPair = nameIdPair;
+    graphData->amountEdges = amountOfLinks;
 
     return graphData;
 }
@@ -85,7 +86,7 @@ void printRegistry(int size, NameIDPair *nid) {
 }
 
 
-char* parseFileHeader(FILE *file, char *tit) {
+char *parseFileHeader(FILE *file, char *tit) {
     char title[300]; // initial title size, will be adapted later
     if (fscanf(file, "digraph %s {", title) != 1) {
         fprintf(stderr, "Failed to parse the header of the file! ... aborting");
@@ -100,11 +101,12 @@ char* parseFileHeader(FILE *file, char *tit) {
 GraphData *initGraphData() {
     GraphData *gd = malloc(sizeof(GraphData));
     gd->size = 0;
+    gd->amountEdges = 0;
     gd->nameIdPair = NULL;
     gd->nodeLinks = NULL;
+    gd->title = NULL;
     return gd;
 }
-
 
 
 NameIDPair *nidInit(const int *sizeOfNidArray) {
@@ -115,7 +117,7 @@ NodeLinkPair *nlpInit(const int *sizeOfNlpArray) {
     return malloc(sizeof(NodeLinkPair) * (*sizeOfNlpArray));
 }
 
-void printLinkMatrix(int size, int* matrix) {
+void printLinkMatrix(int size, int *matrix) {
     printf("\n");
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {

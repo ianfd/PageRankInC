@@ -66,7 +66,6 @@ void registerNodeLink(int from, int to, int *nlIncrement, NodeLinkPair *nl) {
     nl[newID].to = to;
     nl[newID].from = from;
     *(nlIncrement) = newID;
-    fprintf(stderr, "DEBUG | LINK | CREATE from: %d - to: %d\n", from, to);
 }
 
 NodeLinkPair *initNodeLinks() {

@@ -15,8 +15,13 @@
 #include "argParser.h"
 #include "data.h"
 #include "fileParser.h"
+#include "statistics.h"
 
 PRData *initPrData();
+
+void freeProcedureGD(GraphData *graphData);
+
+void freeProcedurePRD(PRData *prData);
 
 int main(int argc, char *const *argv) {
     // defining the default dataStorage for the pagerank data.
@@ -44,15 +49,17 @@ int main(int argc, char *const *argv) {
     } else if (prGeneralInformation->outputMarkowChain) {
         // when executing the Markow chain
         gd = parseGraphFile(prGeneralInformation->file);
-        printf("Title: %s", gd->title);
-        printLinkMatrix(gd->size, gd->nodeLinks);
         return 0;
     } else if (prGeneralInformation->outputSimulation) {
         // when executing the simulation
+        gd = parseGraphFile(prGeneralInformation->file);
+    } else if (prGeneralInformation->outputStatistics) {
 
-
-    } else {
-
+        gd = parseGraphFile(prGeneralInformation->file);
+        printStatistics(gd);
+        freeProcedureGD(gd);
+        freeProcedurePRD(prGeneralInformation);
+        exit(0);
     }
 
 
@@ -69,6 +76,21 @@ PRData *initPrData() {
     returnPr->p = 0.1;
     returnPr->n = 0;
     return returnPr;
+}
+
+void freeProcedureGD(GraphData *graphData) {
+    free(graphData->nodeLinks);
+    for (int i = 0; i < graphData->size; ++i) {
+        free(graphData->nameIdPair[i].name);
+    }
+    free(graphData->nameIdPair);
+    free(graphData);
+
+}
+
+void freeProcedurePRD(PRData *prData) {
+    free(prData->file);
+    free(prData);
 }
 
 

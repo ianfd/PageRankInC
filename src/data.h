@@ -31,6 +31,7 @@ struct GraphData {
     int *nodeLinks; // link of all nodes
     NameIDPair* nameIdPair; // link node ID to node name
     int size; // will be initiated with 0
+    int amountEdges;
 };
 typedef struct GraphData GraphData;
 

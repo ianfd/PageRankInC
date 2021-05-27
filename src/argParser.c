@@ -115,7 +115,7 @@ void argParsers(unsigned argc, char *const *argv, PRData *prData) {
                         }
                         break;
                     case 's':
-                        prData->outputSimulation = true;
+                        prData->outputStatistics = true;
                         break;
                 }
 

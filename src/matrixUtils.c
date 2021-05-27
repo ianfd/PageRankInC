@@ -45,3 +45,32 @@ int getFromIntMatrix(int size, int x, int y, int *matrix) {
     }
     return -1;
 }
+
+// gets all outgoing connections from a node with amount
+int *getTosFromIntMatrix(int size, int to, int *matrix) {
+    if (to < size) {
+        int *retMatrix = malloc(sizeof(int) * size);
+        for (int i = 0; i < size; ++i) {
+            int valAtTo = matrix[(to * size + i)];
+            retMatrix[i] = valAtTo;
+        }
+        return retMatrix;
+    } else {
+        fprintf(stderr, "You tried to access an unknown ID! (TO search) to: %d size: %d", to, size);
+        return NULL;
+    }
+}
+
+int *getFromsFromIntMatrix(int size, int from, int *matrix) {
+    if (from < size) {
+        int *retMatrix = malloc(sizeof(int) * size);
+        for (int i = 0; i < size; ++i) {
+            int valAtFrom = matrix[(i * size + from)];
+            retMatrix[i] = valAtFrom;
+        }
+        return retMatrix;
+    } else {
+        fprintf(stderr, "You tried to access an unknown ID! (TO search) to: %d size: %d", from, size);
+        return NULL;
+    }
+}
