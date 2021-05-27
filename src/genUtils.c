@@ -57,7 +57,6 @@ void checkFile(char *filename) {
             fprintf(stderr, "There can be no file found under: %s\n", filename);
             exit(1);
         }
-        printf("Found file under %s. \n", filename);
         fclose(file);
     } else {
         fprintf(stderr, "There can be no file found under: %s\n", filename);

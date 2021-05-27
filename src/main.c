@@ -16,12 +16,15 @@
 #include "data.h"
 #include "fileParser.h"
 #include "statistics.h"
+#include "surfer.h"
 
 PRData *initPrData();
 
 void freeProcedureGD(GraphData *graphData);
 
 void freeProcedurePRD(PRData *prData);
+
+SurferData *initSurferDate();
 
 int main(int argc, char *const *argv) {
     // defining the default dataStorage for the pagerank data.
@@ -49,10 +52,20 @@ int main(int argc, char *const *argv) {
     } else if (prGeneralInformation->outputMarkowChain) {
         // when executing the Markow chain
         gd = parseGraphFile(prGeneralInformation->file);
+
+        freeProcedureGD(gd);
+        freeProcedurePRD(prGeneralInformation);
         return 0;
     } else if (prGeneralInformation->outputSimulation) {
         // when executing the simulation
         gd = parseGraphFile(prGeneralInformation->file);
+        SurferData *surferData = initSurferDate();
+        surferData->p = prGeneralInformation->p;
+        surferData->runs = prGeneralInformation->n;
+        runSurfer(gd, surferData);
+        freeProcedureGD(gd);
+        freeProcedurePRD(prGeneralInformation);
+
     } else if (prGeneralInformation->outputStatistics) {
 
         gd = parseGraphFile(prGeneralInformation->file);
@@ -93,5 +106,11 @@ void freeProcedurePRD(PRData *prData) {
     free(prData);
 }
 
+SurferData *initSurferDate() {
+    SurferData *sd = malloc(sizeof(SurferData));
+    sd->runs = 0;
+    sd->p = 0.0;
+    return sd;
+}
 
 

@@ -24,7 +24,12 @@ bool nodeExists(int size, char *name, NameIDPair *registry) {
 }
 
 char *getNameFromID(unsigned int id, int size, NameIDPair *registry) {
-    return NULL;
+    if (id < size) {
+        return duplicateString(registry[id].name);
+    } else {
+        return NULL;
+    }
+
 }
 
 int getIDFromName(int size, char *name, NameIDPair *registry) {

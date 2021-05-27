@@ -46,7 +46,6 @@ typedef struct PRData PRData;
 
 // Defining all data required for the Markow series
 struct MarkowData {
-    GraphData *graph;
     double *probMatrix; // probability matrix
     double *probVector; // probability vector for current position will be calculated with the matrix
     int rounds; // how many rounds should this calculation have
@@ -55,7 +54,9 @@ struct MarkowData {
 typedef struct MarkowData MarkowData;
 
 struct SurferData {
-    GraphData *graphData;
+    int runs;
+    int* savedPosition;
+    double p;
 };
 
 typedef struct SurferData SurferData;
