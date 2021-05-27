@@ -5,4 +5,15 @@
 #ifndef IANFD_MATRIXUTILS_H
 #define IANFD_MATRIXUTILS_H
 
+
+int *initIntMatrix(int size);
+
+double *initDoubleMatrix(int size);
+
+double getFromDoubleMatrix(int size, int h, int w, double *matrix);
+
+int getFromIntMatrix(int size, int h, int w, int *matrix);
+
+void incrementAtInt(int size, int x, int y, int *matrix);
+
 #endif //IANFD_MATRIXUTILS_H

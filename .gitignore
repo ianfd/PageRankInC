@@ -3,3 +3,5 @@ obj
 *.pyc
 .vscode/
 .idea
+testfiles
+testfiles/*
