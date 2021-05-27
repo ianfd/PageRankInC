@@ -14,7 +14,6 @@
 
 void runSurfer(GraphData *graphData, SurferData *surferData) {
     if (graphData->size == 0) {
-        printf("The provided graph is empty!\n");
         exit(0);
     }
 
