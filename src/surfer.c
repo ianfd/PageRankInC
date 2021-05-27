@@ -13,6 +13,10 @@
 #include "graphUtils.h"
 
 void runSurfer(GraphData *graphData, SurferData *surferData) {
+    if (graphData->size == 0) {
+        printf("The provided graph is empty!\n");
+        exit(0);
+    }
 
     int currentPosition = -1;
     surferData->savedPosition = malloc(sizeof(int) * surferData->runs); // allocate enough memory to store all run data!
