@@ -36,12 +36,7 @@ int main(int argc, char *const *argv) {
 
     argParsers(argc, argv, prGeneralInformation);
 
-    if (prGeneralInformation->fileProvided) {
-        checkFile(prGeneralInformation->file);
-    } else {
-        fprintf(stderr, "You didn't provide a file! ... aborting \n");
-        exit(1);
-    }
+
     // ------------------------------- end argument parser -------------------------------
 
     // check the starting procedure
@@ -51,13 +46,26 @@ int main(int argc, char *const *argv) {
         printHelp();
     } else if (prGeneralInformation->outputMarkowChain) {
         // when executing the Markow chain
+        if (prGeneralInformation->fileProvided) {
+            checkFile(prGeneralInformation->file);
+        } else {
+            fprintf(stderr, "You didn't provide a file! ... aborting \n");
+            exit(1);
+        }
         gd = parseGraphFile(prGeneralInformation->file);
 
         freeProcedureGD(gd);
         freeProcedurePRD(prGeneralInformation);
+
         return 0;
     } else if (prGeneralInformation->outputSimulation) {
         // when executing the simulation
+        if (prGeneralInformation->fileProvided) {
+            checkFile(prGeneralInformation->file);
+        } else {
+            fprintf(stderr, "You didn't provide a file! ... aborting \n");
+            exit(1);
+        }
         gd = parseGraphFile(prGeneralInformation->file);
         SurferData *surferData = initSurferDate();
         surferData->p = prGeneralInformation->p;
@@ -67,7 +75,12 @@ int main(int argc, char *const *argv) {
         freeProcedurePRD(prGeneralInformation);
 
     } else if (prGeneralInformation->outputStatistics) {
-
+        if (prGeneralInformation->fileProvided) {
+            checkFile(prGeneralInformation->file);
+        } else {
+            fprintf(stderr, "You didn't provide a file! ... aborting \n");
+            exit(1);
+        }
         gd = parseGraphFile(prGeneralInformation->file);
         printStatistics(gd);
         freeProcedureGD(gd);
