@@ -21,7 +21,7 @@ void printStatistics(GraphData *graphData) {
         calcMinMaxFrom(min, max, graphData);
         printf("- indegree: %d-%d \n", *min, *max);
         calcMinMaxTo(min, max, graphData);
-        printf("- outdegree: %d-%d", *min, *max);
+        printf("- outdegree: %d-%d\n", *min, *max);
         free(min);
         free(max);
     } else {
@@ -41,6 +41,7 @@ void calcMinMaxFrom(int *min, int *max, GraphData *graphData) {
         if (currMin > sum) currMin = sum;
         free(row);
     }
+    if (graphData->size == 0) currMin = 0;
     *min = currMin;
     *max = currMax;
 }
@@ -56,6 +57,7 @@ void calcMinMaxTo(int *min, int *max, GraphData *graphData) {
         if (currMin > sum) currMin = sum;
         free(row);
     }
+    if (graphData->size == 0) currMin = 0;
     *min = currMin;
     *max = currMax;
 
