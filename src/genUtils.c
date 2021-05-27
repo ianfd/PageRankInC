@@ -27,7 +27,7 @@ bool IsValidNumber(char *string) {
 
 char *duplicateString(char *toCopy) {
     if (toCopy != NULL) {
-        char *str = malloc(sizeof(char) + (strlen(toCopy) + 4));
+        char* str = malloc(sizeof(char) * 257);
         strcpy(str, toCopy);
         return str;
     } else {
