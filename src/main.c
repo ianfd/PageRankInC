@@ -110,6 +110,7 @@ void freeProcedureGD(GraphData *graphData) {
         free(graphData->nameIdPair[i].name);
     }
     free(graphData->nameIdPair);
+    free(graphData->title);
     free(graphData);
 
 }
