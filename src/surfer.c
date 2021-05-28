@@ -71,7 +71,7 @@ void runSurfer(GraphData *graphData, SurferData *surferData) {
         }
     }
 
-
+    free(amountIDs);
 }
 
 void insertRun(int run, int toID, int *savedPositions) {
@@ -104,10 +104,13 @@ bool hasOutgoingNodes(int position, GraphData *gd, bool includeSelfLink) {
             int temp = row[i];
             sum = sum + temp;
         }
+        free(row);
         return (sum > 0); //return true if sum is more than one
     } else {
+        free(row);
         return false;
     }
+
 }
 
 int getRandomOutgoingEdge(int position, GraphData *gd) {
@@ -123,12 +126,15 @@ int getRandomOutgoingEdge(int position, GraphData *gd) {
         int randomWeight = randu(sumOfWights);
         for (int i = 0; i < gd->size; ++i) {
             if (randomWeight < row[i]) {
+                free(row);
                 return i;
             }
             randomWeight = randomWeight - row[i];
         }
+        free(row);
         return -1;
     } else {
+        free(row);
         return -1;
     }
 
