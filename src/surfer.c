@@ -61,7 +61,7 @@ void runSurfer(GraphData *graphData, SurferData *surferData) {
     }
 
     for (int i = 0; i < graphData->size; ++i) {
-        char* name = getNameFromID(i, graphData->size, graphData->nameIdPair);
+        char *name = getNameFromID(i, graphData->size, graphData->nameIdPair);
         if (name != NULL) {
             double amount = (amountIDs[i] * 1.0) / surferData->runs;
             printf("%s %10.10f \n", name, amount);
@@ -70,8 +70,9 @@ void runSurfer(GraphData *graphData, SurferData *surferData) {
             exit(1);
         }
     }
-
     free(amountIDs);
+    free(surferData->savedPosition);
+    free(surferData);
 }
 
 void insertRun(int run, int toID, int *savedPositions) {
@@ -110,7 +111,6 @@ bool hasOutgoingNodes(int position, GraphData *gd, bool includeSelfLink) {
         free(row);
         return false;
     }
-
 }
 
 int getRandomOutgoingEdge(int position, GraphData *gd) {

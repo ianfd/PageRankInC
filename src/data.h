@@ -49,6 +49,7 @@ struct MarkowData {
     double *probMatrix; // probability matrix
     double *probVector; // probability vector for current position will be calculated with the matrix
     int rounds; // how many rounds should this calculation have
+    double p;
 };
 
 typedef struct MarkowData MarkowData;

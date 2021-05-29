@@ -23,11 +23,20 @@ double *initDoubleMatrix(int size) {
     return matrix;
 }
 
+// y is from, x is to
 double getFromDoubleMatrix(int size, int x, int y, double *matrix) {
     if (size > x || size > y) {
         return matrix[(x + (y * size))];
     }
     return -1.0;
+}
+
+void insertToDoubleMatrix(int size, int from, int to, double value, double *matrix) {
+    if (size > to || size > from) {
+        matrix[(to  + from * size)] = value;
+    } else {
+        fprintf(stderr, "Tried to access unassigned matrix!");
+    }
 }
 
 void incrementAtInt(int size, int x, int y, int *matrix) {

@@ -17,6 +17,7 @@
 #include "fileParser.h"
 #include "statistics.h"
 #include "surfer.h"
+#include "markow.h"
 
 PRData *initPrData();
 
@@ -53,10 +54,14 @@ int main(int argc, char *const *argv) {
             exit(1);
         }
         gd = parseGraphFile(prGeneralInformation->file);
-
+        MarkowData *markowData = malloc(sizeof(MarkowData));
+        markowData->probMatrix = malloc(sizeof(double) * gd->size * gd->size);
+        markowData->probVector = malloc(sizeof(double) * gd->size);
+        markowData->p = prGeneralInformation->p;
+        markowData->rounds = prGeneralInformation->n;
+        doMarkow(gd, markowData);
         freeProcedureGD(gd);
         freeProcedurePRD(prGeneralInformation);
-
         return 0;
     } else if (prGeneralInformation->outputSimulation) {
         // when executing the simulation

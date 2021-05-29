@@ -20,4 +20,8 @@ int *getTosFromIntMatrix(int size, int to, int *matrix);
 
 int *getFromsFromIntMatrix(int size, int from, int *matrix);
 
+void insertToDoubleMatrix(int size, int from, int to, double value, double* matrix);
+
+
+
 #endif //IANFD_MATRIXUTILS_H
