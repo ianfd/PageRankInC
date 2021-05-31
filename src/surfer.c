@@ -94,7 +94,7 @@ void runSurfer(GraphData *graphData, SurferData *surferData) {
                 exit(1);
             }
         }
-        
+        free(amountIDs);
         
     }
     free(surferData);
