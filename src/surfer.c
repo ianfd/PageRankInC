@@ -75,16 +75,27 @@ void runSurfer(GraphData *graphData, SurferData *surferData) {
         free(surferData->savedPosition);
 
     } else {
-        double amount = 1.0 / graphData->size;
+
+        int *amountIDs = malloc(sizeof(int) * graphData->size);
+        for (int i = 0; i < graphData->size; ++i) {
+            amountIDs[i] = 0;
+        }
+        for (int i = 0; i < surferData->runs; ++i) {
+            int randMove = selectRandomPosition(graphData->size);
+            amountIDs[randMove]++;
+        }
         for (int i = 0; i < graphData->size; ++i) {
             char *name = getNameFromID(i, graphData->size, graphData->nameIdPair);
             if (name != NULL) {
+                double amount = (amountIDs[i] * 1.0) / surferData->runs;
                 printf("%s %10.10f \n", name, amount);
                 free(name);
             } else {
                 exit(1);
             }
         }
+        
+        
     }
     free(surferData);
 
