@@ -78,7 +78,6 @@ int main(int argc, char *const *argv) {
         runSurfer(gd, surferData);
         freeProcedureGD(gd);
         freeProcedurePRD(prGeneralInformation);
-
     } else if (prGeneralInformation->outputStatistics) {
         if (prGeneralInformation->fileProvided) {
             checkFile(prGeneralInformation->file);

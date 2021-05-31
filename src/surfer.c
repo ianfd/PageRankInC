@@ -17,62 +17,77 @@ void runSurfer(GraphData *graphData, SurferData *surferData) {
         exit(0);
     }
 
-    int currentPosition = -1;
-    surferData->savedPosition = malloc(sizeof(int) * surferData->runs); // allocate enough memory to store all run data!
-    // initial position, after that select random position (not saved in savedPosition)
-    currentPosition = selectRandomPosition(graphData->size);
-    for (int i = 0; i < surferData->runs; ++i) {
-        if (hasOutgoingNodes(currentPosition, graphData, true)) {
-            // do a random move to connected nodes
-            if (doRandMove(surferData->p)) {
-                // when you do a random move
+    if (surferData->p < 1.0) {
+        int currentPosition = -1;
+        surferData->savedPosition = malloc(sizeof(int) * surferData->runs); // allocate enough memory to store all run data!
+        // initial position, after that select random position (not saved in savedPosition)
+        currentPosition = selectRandomPosition(graphData->size);
+        for (int i = 0; i < surferData->runs; ++i) {
+            if (hasOutgoingNodes(currentPosition, graphData, true)) {
+                // do a random move to connected nodes
+                if (doRandMove(surferData->p)) {
+                    // when you do a random move
+                    int randMove = selectRandomPosition(graphData->size);
+                    insertRun(i, randMove, surferData->savedPosition);
+                    currentPosition = randMove;
+                } else {
+                    // do a move to connected nodes
+                    int randNode = getRandomOutgoingEdge(currentPosition, graphData);
+                    if (randNode != -1) {
+                        insertRun(i, randNode, surferData->savedPosition);
+                        currentPosition = randNode;
+                    } else {
+                        fprintf(stderr, "An invalid random node has been delivered.");
+                        exit(1);
+                    }
+                }
+            } else {
+                // do random move
                 int randMove = selectRandomPosition(graphData->size);
                 insertRun(i, randMove, surferData->savedPosition);
                 currentPosition = randMove;
-            } else {
-                // do a move to connected nodes
-                int randNode = getRandomOutgoingEdge(currentPosition, graphData);
-                if (randNode != -1) {
-                    insertRun(i, randNode, surferData->savedPosition);
-                    currentPosition = randNode;
-                } else {
-                    fprintf(stderr, "An invalid random node has been delivered.");
-                    exit(1);
+            }
+        }
+
+        int *amountIDs = malloc(sizeof(int) * graphData->size);
+        for (int i = 0; i < graphData->size; ++i) {
+            int sumForID = 0;
+            for (int j = 0; j < surferData->runs; ++j) {
+                int tmp = surferData->savedPosition[j];
+                if (tmp == i) {
+                    sumForID++;
                 }
             }
-        } else {
-            // do random move
-            int randMove = selectRandomPosition(graphData->size);
-            insertRun(i, randMove, surferData->savedPosition);
-            currentPosition = randMove;
+            amountIDs[i] = sumForID;
         }
-    }
 
-    int *amountIDs = malloc(sizeof(int) * graphData->size);
-    for (int i = 0; i < graphData->size; ++i) {
-        int sumForID = 0;
-        for (int j = 0; j < surferData->runs; ++j) {
-            int tmp = surferData->savedPosition[j];
-            if (tmp == i) {
-                sumForID++;
+        for (int i = 0; i < graphData->size; ++i) {
+            char *name = getNameFromID(i, graphData->size, graphData->nameIdPair);
+            if (name != NULL) {
+                double amount = (amountIDs[i] * 1.0) / surferData->runs;
+                printf("%s %10.10f \n", name, amount);
+                free(name);
+            } else {
+                exit(1);
             }
         }
-        amountIDs[i] = sumForID;
-    }
+        free(amountIDs);
+        free(surferData->savedPosition);
 
-    for (int i = 0; i < graphData->size; ++i) {
-        char *name = getNameFromID(i, graphData->size, graphData->nameIdPair);
-        if (name != NULL) {
-            double amount = (amountIDs[i] * 1.0) / surferData->runs;
-            printf("%s %10.10f \n", name, amount);
-            free(name);
-        } else {
-            exit(1);
+    } else {
+        double amount = 1.0 / graphData->size;
+        for (int i = 0; i < graphData->size; ++i) {
+            char *name = getNameFromID(i, graphData->size, graphData->nameIdPair);
+            if (name != NULL) {
+                printf("%s %10.10f \n", name, amount);
+                free(name);
+            } else {
+                exit(1);
+            }
         }
     }
-    free(amountIDs);
-    free(surferData->savedPosition);
     free(surferData);
+
 }
 
 void insertRun(int run, int toID, int *savedPositions) {
