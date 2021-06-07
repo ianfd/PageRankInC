@@ -67,7 +67,6 @@ void checkFile(char *filename) {
 }
 
 void removeChar(char *str, char garbage) {
-
     char *src, *dst;
     for (src = dst = str; *src != '\0'; src++) {
         *dst = *src;
